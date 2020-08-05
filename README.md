@@ -1,4 +1,4 @@
-# Go + DDD + レイヤードアーキテクチャを本やネットで調べ、実際に動かしながらREST APIを実装してみました。
+Go + DDD + レイヤードアーキテクチャを本やネットで調べ、実際に動かしながらREST APIを実装してみました。
 
 ■ DDD（domain driven design）とは
 
@@ -58,29 +58,3 @@ infrastructure層
 → DBやMail操作など
 
 ・直接handler、usecaseから呼ばれることもあるが、基本的にdomainのインターフェースによって抽象化される
-
-■ ディレクトリ構成
-
-
-ディレクトリ構成は以下のようになりました。docker-compose.ymlでMySQL立ち上げて使用しています。
-
-go-ddd-crud  
-├── config  
-│   └── database.go  
-├── domain  
-│   └── model  
-│        └── item.go  
-│   └── repository  
-│        └── item.go  
-├── infrastructure  
-│   └── persistence  
-│        └── item.go  
-├── interface  
-│   └── handler  
-│        └── item.go  
-├── usecase  
-│   └── item.go  
-├── .env.development ←コミットせず  
-├── .env.production ←コミットせず  
-├── docker-compose.yml  
-└── main.go
