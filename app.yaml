@@ -1,0 +1,8 @@
+runtime: go112
+service: go-api-production
+instance_class: F1
+handlers:
+  - url: /.*
+    script: auto
+env_variables:
+  HAKEN_ENV: production
