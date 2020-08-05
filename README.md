@@ -1,29 +1,67 @@
-# README #
+Go + DDD + レイヤードアーキテクチャを本やネットで調べ、実際に動かしながらREST APIを実装してみました。
 
-This README would normally document whatever steps are necessary to get your application up and running.
+■ DDD（domain driven design）とは
+DDD(ドメイン駆動設計)とはソフトウェアの設計手法であり、ドメインモデリングに着目してソフトウェアの価値を高める手法です。
+ソフトウェアの核心にある複雑さに立ち向かうため、チームの共通言語である「ユビキタス言語」を用いて「ドメインモデル」を構築し、それをコードとして実装します。
+また、大規模で密結合なシステムにならないように「ドメイン」と「境界づけられたコンテキスト」にシステムを分割し、「コアドメイン」という最重要領域に集中して開発を行います。
+DDDについてはまだ理解が浅いので今後開発しながら、知見を深めていきます。
 
-### What is this repository for? ###
+■ レイヤードアーキテクチャとは
+従来のMVCなどの3層アーキテクチャに比べてdomain層を確立させ、そこにドメインロジックを凝集させようという発想のアーキテクチャです。各レイヤごとに責務を切り分け、依存の方向を一方向にします。DDDではDIP(依存関係逆転の原則)を用いた依存関係になります。
 
-* Quick summary
-* Version
-* [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
+■ レイヤードアーキテクチャが必要な理由
+レイヤードアーキテクチャが必要な理由として以下の2点が挙げられます。
+・コードの依存関係を整理できる
+・レイヤ内のパッケージの凝縮度を高めることができる
 
-### How do I get set up? ###
+また、コード量が多くなると、何がどこに影響するのか管理しづらくなり可読性が低下します。レイヤードアーキテクチャを取り入れることで、システムの保守性が低下しないようにするための効果的なアプローチとなります。
 
-* Summary of set up
-* Configuration
-* Dependencies
-* Database configuration
-* How to run tests
-* Deployment instructions
+■ 各レイヤの責務と役割
+それぞれのレイヤの責務と役割は以下のようになります。
+interface層
+・HTTPを受け取り、usecaseを呼び結果を出力(JSONやHTML)
+→ 基本的に薄い実装になるが、HTTPのbodyやheaderのパース処理などで薄くならないこともあります。
 
-### Contribution guidelines ###
+usecase層
+・アプリケーションレイヤでシステム使用上のユースケースを表現
+→ ユーザ登録、ユーザ覧表示など
 
-* Writing tests
-* Code review
-* Other guidelines
+・handlerから呼びされる
+→ 1つのhandlerに対応する専用usecaseが1つ存在します
 
-### Who do I talk to? ###
+・基本的にはdomainを触る
 
-* Repo owner or admin
-* Other community or team contact
+
+domain層
+・モデルレイヤでドメイン(システムが扱う業務領域)に関する値と振る舞いを持つ
+・他のレイヤに依存しない
+
+infrastructure層
+・技術的関心ごとを扱うレイヤで具体的な技術に関する処理を書く
+→ DBやMail操作など
+
+・直接handler、usecaseから呼ばれることもあるが、基本的にdomainのインターフェースによって抽象化される
+
+■ ディレクトリ構成
+ディレクトリ構成は以下のようになりました。docker-compose.ymlでMySQL立ち上げて使用しています。
+
+go-ddd-crud
+├── config
+│   └── database.go
+├── domain
+│   └── model
+│        └── item.go
+│   └── repository
+│        └── item.go
+├── infrastructure
+│   └── persistence
+│        └── item.go
+├── interface
+│   └── handler
+│        └── item.go
+├── usecase
+│   └── item.go
+├── .env.development ←コミットせず
+├── .env.production ←コミットせず
+├── docker-compose.yml
+└── main.go
