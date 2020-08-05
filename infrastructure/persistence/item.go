@@ -19,9 +19,9 @@ func NewItemPersistence(conn *gorm.DB) repository.ItemRepository {
 }
 
 // Search : DB から Item データの全件取得（ItemRepository インターフェースの Search() を実装したもの）
-func (jp *itemPersistence) FindAll() (items []*model.Item, err error) {
+func (ip *itemPersistence) FindAll() (items []*model.Item, err error) {
 	// DB接続
-	db := jp.Conn
+	db := ip.Conn
 
 	if err := db.Find(&items).Error; err != nil {
 		return nil, err
@@ -31,9 +31,9 @@ func (jp *itemPersistence) FindAll() (items []*model.Item, err error) {
 }
 
 // Create : DB から Item データの新規登録（ItemRepository インターフェースの Create() を実装したもの）
-func (jp *itemPersistence) Create(item *model.Item) (err error) {
+func (ip *itemPersistence) Create(item *model.Item) (err error) {
 	// DB接続
-	db := jp.Conn
+	db := ip.Conn
 	now := time.Now()
 
 	// 新規登録用Item生成
@@ -53,9 +53,9 @@ func (jp *itemPersistence) Create(item *model.Item) (err error) {
 }
 
 // Update : DB から Item データの更新（ItemRepository インターフェースの Update() を実装したもの）
-func (jp *itemPersistence) Update(item *model.Item) (err error) {
+func (ip *itemPersistence) Update(item *model.Item) (err error) {
 	// DB接続
-	db := jp.Conn
+	db := ip.Conn
 	now := time.Now()
 
 	// 更新対象のItem取得

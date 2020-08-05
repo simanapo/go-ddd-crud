@@ -19,16 +19,16 @@ type itemUseCase struct {
 }
 
 // NewItemUseCase : Item データに関する UseCase を生成
-func NewItemUseCase(jr repository.ItemRepository) ItemUseCase {
+func NewItemUseCase(ir repository.ItemRepository) ItemUseCase {
 	return &itemUseCase{
-		itemRepository: jr,
+		itemRepository: ir,
 	}
 }
 
 // Search : Item データを全件取得するためのユースケース
-func (ju itemUseCase) FindAll() (items []*model.Item, err error) {
+func (iu itemUseCase) FindAll() (items []*model.Item, err error) {
 	// Persistence（Repository）を呼び出し
-	items, err = ju.itemRepository.FindAll()
+	items, err = iu.itemRepository.FindAll()
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +36,7 @@ func (ju itemUseCase) FindAll() (items []*model.Item, err error) {
 }
 
 // Create : Item データを新規登録するためのユースケース
-func (ju itemUseCase) Create(status int, name string) (err error) {
+func (iu itemUseCase) Create(status int, name string) (err error) {
 	// Item 引数から構造体生成
 	item := &model.Item{
 		Name:   name,
@@ -49,7 +49,7 @@ func (ju itemUseCase) Create(status int, name string) (err error) {
 	}
 
 	// Persistence（Repository）を呼び出し
-	err = ju.itemRepository.Create(item)
+	err = iu.itemRepository.Create(item)
 	if err != nil {
 		return err
 	}
@@ -57,7 +57,7 @@ func (ju itemUseCase) Create(status int, name string) (err error) {
 }
 
 // Update : Item データを更新するためのユースケース
-func (ju itemUseCase) Update(id, status int, name string) (err error) {
+func (iu itemUseCase) Update(id, status int, name string) (err error) {
 	// Item 引数から構造体生成
 	item := &model.Item{
 		Id:     id,
@@ -71,7 +71,7 @@ func (ju itemUseCase) Update(id, status int, name string) (err error) {
 	}
 
 	// Persistence（Repository）を呼び出し
-	err = ju.itemRepository.Update(item)
+	err = iu.itemRepository.Update(item)
 	if err != nil {
 		return err
 	}

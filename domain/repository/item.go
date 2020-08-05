@@ -5,7 +5,7 @@ import (
 )
 
 // ItemRepository : Item における Repository のインターフェース
-//  -> 依存性逆転の法則により infra 層は domain 層（本インターフェース）に依存
+//  -> 依存性逆転の法則により infrastructure 層は domain 層（本インターフェース）に依存
 type ItemRepository interface {
 	FindAll() (items []*model.Item, err error)
 	Create(item *model.Item) (err error)

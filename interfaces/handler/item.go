@@ -22,16 +22,16 @@ type itemHandler struct {
 }
 
 // NewItemUseCase : Item データに関する Handler を生成
-func NewItemHandler(ju usecase.ItemUseCase) ItemHandler {
+func NewItemHandler(iu usecase.ItemUseCase) ItemHandler {
 	return &itemHandler{
-		itemUseCase: ju,
+		itemUseCase: iu,
 	}
 }
 
 // ItemIndex : GET /items -> Item データの全件取得結果を返す
-func (jh itemHandler) Index(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
-	// ユースケースの呼出
-	items, err := jh.itemUseCase.FindAll()
+func (ih itemHandler) Index(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
+	// ユースケースの呼び出し
+	items, err := ih.itemUseCase.FindAll()
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
@@ -45,45 +45,31 @@ func (jh itemHandler) Index(w http.ResponseWriter, r *http.Request, pr httproute
 }
 
 // ItemCreate : POST /items -> Item データの新規登録結果を返す
-func (jh itemHandler) Create(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
+func (ih itemHandler) Create(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
 	// パラメータ
 	name := r.FormValue("name")
 	status, _ := strconv.Atoi(r.FormValue("status"))
 
-	// ユースケースの呼出
-	err := jh.itemUseCase.Create(status, name)
+	// ユースケースの呼び出し
+	err := ih.itemUseCase.Create(status, name)
 	fmt.Println(err)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-
-	// http.Error(w, "成功", 200)
-
-	// クライアントにレスポンスを返却
-	// if err = json.NewEncoder(w).Encode(items); err != nil {
-	// 	http.Error(w, err.Error(), 500)
-	// 	return
-	// }
 }
 
 // ItemUpdate : PUT /items -> Item データの更新結果を返す
-func (jh itemHandler) Update(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
+func (ih itemHandler) Update(w http.ResponseWriter, r *http.Request, pr httprouter.Params) {
 	// パラメータ
 	id, _ := strconv.Atoi(r.FormValue("id"))
 	name := r.FormValue("name")
 	status, _ := strconv.Atoi(r.FormValue("status"))
 
-	// ユースケースの呼出
-	err := jh.itemUseCase.Update(id, status, name)
+	// ユースケースの呼び出し
+	err := ih.itemUseCase.Update(id, status, name)
 	if err != nil {
 		http.Error(w, err.Error(), 500)
 		return
 	}
-
-	// クライアントにレスポンスを返却
-	// if err = json.NewEncoder(w).Encode(items); err != nil {
-	// 	http.Error(w, err.Error(), 500)
-	// 	return
-	// }
 }

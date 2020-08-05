@@ -25,9 +25,9 @@ func main() {
 	router.PUT("/api/items", itemHandler.Update)
 
 	// サーバ起動
-	fmt.Println("========================")
-	fmt.Println("Server Start >> http://localhost:8080")
-	fmt.Println("========================")
+	fmt.Println("----------------------")
+	fmt.Println("サーバ起動 http://localhost:8080")
+	fmt.Println("----------------------")
 
 	http.ListenAndServe(":8080", &Server{router})
 	log.Fatal(http.ListenAndServe(":8080", router))
