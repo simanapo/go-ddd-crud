@@ -64,42 +64,23 @@ infrastructure層
 
 ディレクトリ構成は以下のようになりました。docker-compose.ymlでMySQL立ち上げて使用しています。
 
-go-ddd-crud
-
-├── config
-
-│   └── database.go
-
-├── domain
-
-│   └── model
-
-│        └── item.go
-
-│   └── repository
-
-│        └── item.go
-
-├── infrastructure
-
-│   └── persistence
-
-│        └── item.go
-
-├── interface
-
-│   └── handler
-
-│        └── item.go
-
-├── usecase
-
-│   └── item.go
-
-├── .env.development ←コミットせず
-
-├── .env.production ←コミットせず
-
-├── docker-compose.yml
-
+go-ddd-crud  
+├── config  
+│   └── database.go  
+├── domain  
+│   └── model  
+│        └── item.go  
+│   └── repository  
+│        └── item.go  
+├── infrastructure  
+│   └── persistence  
+│        └── item.go  
+├── interface  
+│   └── handler  
+│        └── item.go  
+├── usecase  
+│   └── item.go  
+├── .env.development ←コミットせず  
+├── .env.production ←コミットせず  
+├── docker-compose.yml  
 └── main.go
